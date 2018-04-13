@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cambio de contraseña</title>
+    <link rel="stylesheet" type="text/css" href="../index.css">
+    <style>
+        #botonAceptar {
+            margin: 30px 20px 30px;
+            font-size: 25px;
+            font-family: sans-serif;
+            border-radius: 10px;
+            background: rgba(90, 138, 214, 0.65);
+            font
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="mainBox">
+        <div>
+            <img src="../Imagenes/logoGTI.svg" alt="logoGTI">
+        </div>
+
+        <h2>Restablecer contraseña</h2>
+
+        <div>
+            <form method="get" action="">
+                Nueva contraseña:<br>
+                <input type="password" id="password">
+                <br> Repetir nueva contraseña:<br>
+                <input type="password" id="repeatpassword"><br>
+
+                <button id="botonAceptar" type="button" onclick="cambioContrasenya()" value=Cambiar>Aceptar</button>
+            </form>
+        </div>
+    </div>
+    <footer>Copyright © Grupo 2 grado GTI</footer>
+
+
+    <script>
+        function cambioContrasenya() {
+            var contrasenya1 = document.getElementById("password").value;
+            var contrasenya2 = document.getElementById("repeatpassword").value;
+            if (contrasenya1 == "" || contrasenya2 == "") {
+                alert("Es obligatorio rellenar los campos");
+            } else {
+                if (contrasenya1 != contrasenya2) {
+                    alert("Asegúrate que el contenido en ambos campos coincide");
+                } else {
+                    fetch("/cambioContrasenya?contrasenya=" + contrasenya1,{
+                      method: 'post'
+                    }).then(function(res){
+                      if(res.status==200) {
+                        alert("Cambio de contraseña exitoso");
+                        window.location.href = "/paginas/lobby.html";
+                      } else {
+                        alert("Error de base de datos");
+                        window.location.reload();
+                      }
+                    });
+
+                    //console.log(contrasenya1 + " " + contrasenya2);
+                }
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
