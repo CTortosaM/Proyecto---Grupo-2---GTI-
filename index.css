@@ -1,0 +1,166 @@
+@import url("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css");
+
+
+
+body {
+    background-color: aliceblue;
+}
+
+#botoncito {
+    line-height: 30px;
+    font-size: 17px;
+}
+
+
+
+
+
+.mainBox {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainBox > div {
+    text-align: left;
+    line-height: 30px;
+    font-size: 17px;
+    margin: 20px;
+}
+
+.button {
+    line-height: 30px;
+    font-size: 17px;
+    margin-left: 30%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+
+footer {
+    padding: 1em;
+    clear: left;
+    text-align: center;
+    background-color: cadetblue;
+    width: 100%;
+}
+
+#logo {
+    align-content: center;
+}
+
+#mensajeError {
+    margin-top: 20%;
+    color: crimson;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+section {
+
+    max-width: 300px;
+    align-items: center;
+    text-align: center;
+    margin: 0px auto;
+    style: none;
+
+}
+
+
+
+#boton {
+    margin: 50px;
+}
+
+
+
+
+#botonacceder {
+    align-content: center;
+    font-size: 35px;
+    margin: 20px;
+}
+
+#mensajeError {
+    color: crimson;
+    border: ridge crimson 1px;
+}
+
+
+
+
+
+
+
+.BoxContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
+    height: 500px;
+}
+
+
+
+.tarjeta {
+    width: 90%;
+    margin-top: 85px;
+}
+
+
+.tarjeta-titulo {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+}
+
+.tarjeta-contenido {
+    display: flex;
+    flex-direction: row;
+    background-color: #ffffff;
+    text-align: center;
+    position: relative;
+    height: 500px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: -1px 8px 33px -5px rgba(0, 0, 0, 0.75);
+}
+
+.tarjeta-contenido-izquierda {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex: 1 1 50%;
+    padding: 19px 15px;
+}
+
+
+.tarjeta-contenido-derecha {
+    flex: 1 1 50%;
+    background-color: #d9d6d5;
+    border-radius: 0 0 0 0;
+}
+
+#recuperarContra {
+    color: #000000;
+    border: ridge crimson 1px;
+}
+
+#grafica {
+    max-width: 700px;
+}
+
+
+#whiteText {
+    color: aliceblue;
+}
+
+.iconoOpciones{
+    width: 50px;
+    height: 50px;
+}

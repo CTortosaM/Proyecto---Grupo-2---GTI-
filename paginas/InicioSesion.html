@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="../index.css">
+  <style>
+    #formulario {
+
+      text-align: center;
+    }
+
+    #boton_acceder {
+      margin: 30px 20px 30px;
+      font-size: 25px;
+      font-family: sans-serif;
+      border-radius: 10px;
+      background: rgba(90, 138, 214, 0.65);
+      font
+    }
+
+    div.banner {
+      text-align: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="mainBox">
+    <img src="../Imagenes/logoGTI.svg" alt="Logo GTI">
+    <div class='banner'>
+      <h2>Inicio de sesión</h2>
+      <p hidden id="mensajeError">Es obligatorio rellenar los campos</p>
+    </div>
+    <div>
+
+      <form id="formulario" action='lobby.html' method="get">
+        Usuario:<br>
+        <input type="text" id="username"><br> Contraseña:
+        <br>
+        <input type="password" id="password"><br>
+
+
+
+        <button id="boton_acceder" type="button" onclick="procesarLogin()" value=Acceder>Acceder</button>
+        <br>
+
+        <a style="" href="#">¿Has olvidado tu contraseña?</a><br>
+      </form>
+
+
+    </div>
+  </section>
+  <script>
+    //Aqui hay que poner un script mediante AJAX con el que         alternativa Ajax a js es6
+    function procesarLogin() {
+      var usuario = document.getElementById("username").value;
+      var contrasenya = document.getElementById("password").value;
+      if (usuario == "" || contrasenya == "") {
+        alert("Es obligatorio rellenar todos los campos");
+      } else {
+        fetch('/login?user=' + usuario + '&password=' + contrasenya, {
+          method: 'post'
+        }).then(function(respuesta) {
+          return respuesta.json();
+        }).then(function(son) {
+          if (son.status == 404 || son.status == 401) {
+            alert('Usuario o contraseña inválido');
+          } else {
+            sessionStorage.setItem('Usuario', JSON.stringify(son));
+            console.log(son.usuario.activo);
+            if (son.usuario.activo == 0) {
+              window.location.href = '/paginas/datosUsuario.html';
+            } else {
+              window.location.href = "/paginas/lobby.html";
+            }//else
+          }//else
+        })//then
+      } //else
+    } //procesarLogin
+  </script>
+
+  <footer>Copyright © Grupo 2 grado GTI</footer>
+
+
+</body>
+
+</html>

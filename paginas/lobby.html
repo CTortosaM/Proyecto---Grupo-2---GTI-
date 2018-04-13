@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lobby</title>
+    <link rel="stylesheet" type="text/css" href="../index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div class="pos-f-t">
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="bg-dark p-4">
+                <a href="/paginas/lobby.html">
+                    <h4 class="text-white">MENU</h4>
+                </a>
+                <a href="/paginas/datosUsuario.html">
+                    <h4 class="text-white">DATOS DE USUARIO</h4>
+                </a>
+                <a onclick="cerrarSesion()" href='#'>
+                    <h4 class="text-white">CERRAR SESIÓN</h4>
+                </a>
+            </div>
+        </div>
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+            <h3 class="text-white">SoftFields</h3>
+            <a href="/paginas/RestablecerContrase%C3%B1a.html"> <img class="iconoOpciones" src="../Imagenes/optionIcon.png"></a>
+        </nav>
+    </div>
+
+    <!-- Aqui termina la navbar -->
+
+
+
+
+    <footer>Copyright © Grupo 2 grado GTI</footer>
+    <script>
+    var usuario = sessionStorage.getItem('Usuario');
+    if(usuario === null) {
+      window.location.href = '/paginas/InicioSesion.html';
+    }
+
+    function cerrarSesion() {
+      sessionStorage.removeItem('Usuario');
+      window.location.href='/paginas/InicioSesion.html';
+    }
+        $(document).ready(function() {
+            $('a[href="#navbar-more-show"], .navbar-more-overlay').on('click', function(event) {
+                event.preventDefault();
+                $('body').toggleClass('navbar-more-show');
+                if ($('body').hasClass('navbar-more-show')) {
+                    $('a[href="#navbar-more-show"]').closest('li').addClass('active');
+                } else {
+                    $('a[href="#navbar-more-show"]').closest('li').removeClass('active');
+                }
+                return false;
+            });
+        });
+
+    </script>
+</body>
+
+</html>
