@@ -114,7 +114,7 @@ function getZona(peticion, respuesta) {
     if(err != null) {
       respuesta.sendStatus(500);
     } else {
-      base_datos.all('SELECT * FROM Vertice WHERE zonaId=1',function(error, vertices){
+      base_datos.all('SELECT * FROM Vertice WHERE zonaId=' + peticion.query.id,function(error, vertices){
         if(error !=  null) {
           respuesta.sendStatus(500)
         } else {
