@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa</title>
+</head>
+
+<body>
+    <div id="mapa" style="width: 700px; height: 500px; border: solid 1px #ccc">
+
+    </div>
+    <button onclick="CargarZonas(1)">Zona 1</button>
+    <button onclick="CargarZonas(2)">Zona 2</button>
+</body>
+<script>
+    var mapa;
+    var zona;
+
+    function iniciarMap() {
+        mapa = new google.maps.Map(document.getElementById("mapa"), {
+            zoom: 16,
+            center: {
+                lat: 38.9922807,
+                lng: -0.1735785
+            },
+            streetViewControl: false
+        });
+
+        mapa.setMapTypeId('hybrid');
+    }
+
+    function CargarZonas(índice) {
+        fetch('/zona?id=' + índice).then(function(respuesta) {
+            return respuesta.json();
+        }).then(function(datos) {
+            console.log(datos);
+            zona = {};
+            var limites = new google.maps.LatLngBounds();
+            datos.vertices.forEach(function(vertice) {
+                vertice.lat = parseFloat(vertice.lat);
+                vertice.lng = parseFloat(vertice.lng);
+                limites.extend(vertice);
+            });
+            zona.poligono = new google.maps.Polygon({
+                paths: datos.vertices,
+                strokeColor: datos.zona.color,
+                fillColor: datos.zona.color,
+                fillOpacity: 0.2
+            });
+            zona.id = datos.zona.id;
+            zona.nombre = datos.zona.nombre;
+            zona.color = datos.zona.color;
+            zona.poligono.setMap(mapa);
+            mapa.fitBounds(limites, 20);
+
+        });
+    }
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CfoqowZGnOpAw3wDFvjc2im84GK_EHk&callback=iniciarMap">
+
+
+</script>
+
+</html>

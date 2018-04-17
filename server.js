@@ -33,11 +33,13 @@ servidor.get("/", function(peticion, respuesta) {
 
 servidor.post('/cambioContrasenya', cambiarContrasenya);
 
+servidor.get('/zona', getZona)
+
 //servidor.get('/lobby', procesarUsuario);
 //BASE DATOS
 var sqlite3 = require('sqlite3');
-base_datos = new sqlite3.Database('base_datos.db',function(err){
-  if(err != null) {
+base_datos = new sqlite3.Database('base_datos.db', function(err) {
+  if (err != null) {
     respuesta.sendStatus(503);
   }
 });
@@ -92,8 +94,31 @@ function cambiarContrasenya(peticion, respuesta) {
   });
 
 }
+//--------------------------------------------------------------------------------
+//FUNCIÓN QUE DEVUELVE LAS ZONAS SEGÚN LA ID DE ZONA
+function getZona(peticion, respuesta) {
+  var objZona = {};
+  var zona;
+  var vertices;
+  base_datos.get('SELECT * from Zona WHERE id=' + peticion.query.id, function(err, res) {
+    if (err != null) {
+      console.log('Error de zona')
+    } else {
+      base_datos.all('SELECT * from Vertice WHERE zonaId=' + peticion.query.id, function(error, array) {
+        if (error != null) {
+          console.log('Error de vertice: ' + error);
+        } else {
+         respuesta.send({
+           zona: res,
+           vertices: array
+         })
+        }//else
+      })
+    }
+  })
+}
 
 
-servidor.listen(50971, function(){
+servidor.listen(50971, function() {
   console.log('En marcha');
 })
