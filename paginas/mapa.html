@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa</title>
+</head>
+
+<body>
+    <div id="mapa" style="width: 700px; height: 500px; border: solid 1px #ccc">
+    </div>
+</body>
+<script>
+    var mapa;
+    var zona = {};
+
+    function initMap() {
+        mapa = new google.maps.Map(document.getElementById("mapa"), {
+            zoom: 16,
+            center: {
+                lat: 38.9922807,
+                lng: -0.1735785
+            },
+            streetViewControl: false
+        });
+
+        mapa.setMapTypeId('hybrid');
+        CargarZonas();
+    }
+
+    function CargarZonas() {
+        fetch('/zona?id=' + 1, {
+            method: 'get'
+        }).then(function(res) {
+            return res.json()
+        }).then(function(datos) {
+            if (datos.status == 500) {
+                alert('Oops');
+            } else {
+                console.log(datos);
+                var limites = new google.maps.LatLngBounds();
+
+                datos.vertices.forEach(function(vertice) {
+                    vertice.lat = parseFloat(vertice.lat);
+                    vertice.lng = parseFloat(vertice.lng);
+
+                    limites.extend(vertice);
+                })
+
+                zona.poligono = new google.maps.Polygon({
+                    paths: datos.vertices,
+                    strokeColor: datos.zona.color,
+                    fillColor: datos.zona.color,
+                    fillOpacity: 0.2
+                });
+
+                zona.id = datos.zona.id;
+                zona.nombre = datos.zona.nombre;
+                zona.color = datos.zona.color;
+                zona.poligono.setMap(mapa);
+                mapa.fitBounds(limites, 20);
+            }
+        })
+    }
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CfoqowZGnOpAw3wDFvjc2im84GK_EHk&callback=initMap">
+
+
+</script>
+
+
+
+
+</html>

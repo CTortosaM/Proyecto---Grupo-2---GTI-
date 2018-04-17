@@ -35,6 +35,8 @@ servidor.put('/cambioContrasenya', cambiarContrasenya);
 
 servidor.put('/setUsuarioActivo', setUsuarioActivo);
 
+servidor.get('/zona', getZona);
+
 //servidor.get('/lobby', procesarUsuario);
 //BASE DATOS
 var sqlite3 = require('sqlite3');
@@ -105,7 +107,27 @@ function setUsuarioActivo(peticion, respuesta) {
     } //else
   });
 }
-
+//-----------------------------------------------------------------------------------
+//FUNCIÓN PARA ENTREGAR LA LISTA DE VÉRTICE QUE FORMAN LA zona
+function getZona(peticion, respuesta) {
+  base_datos.get('SELECT * FROM Zona WHERE id=' + peticion.query.id, function(err, zonas){
+    if(err != null) {
+      respuesta.sendStatus(500);
+    } else {
+      base_datos.all('SELECT * FROM Vertice WHERE zonaId=1',function(error, vertices){
+        if(error !=  null) {
+          respuesta.sendStatus(500)
+        } else {
+          var zona = {
+            zona: zonas,
+            vertices: vertices
+          }
+          respuesta.send(zona);
+        }
+      })
+    }//else
+  })
+}//getZona
 
 servidor.listen(50971, function() {
   console.log('En marcha');
