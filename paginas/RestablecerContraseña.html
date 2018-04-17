@@ -20,8 +20,10 @@
 
 <body>
     <div class="mainBox">
-        <div>
-            <img src="../Imagenes/logoGTI.svg" alt="logoGTI">
+        <div id='logo'>
+            <a href="../paginas/lobby.html">
+                <img src="../Imagenes/logoGTI.svg" alt="logoGTI">
+            </a>
         </div>
 
         <h2>Restablecer contraseña</h2>
@@ -41,6 +43,13 @@
 
 
     <script>
+        var objUsuario = sessionStorage.getItem('Usuario');
+        if (objUsuario == null) {
+            window.location.href = '/paginas/InicioSesion.html';
+        }
+
+        var usuario = JSON.parse(objUsuario).usuario;
+
         function cambioContrasenya() {
             var contrasenya1 = document.getElementById("password").value;
             var contrasenya2 = document.getElementById("repeatpassword").value;
@@ -50,22 +59,22 @@
                 if (contrasenya1 != contrasenya2) {
                     alert("Asegúrate que el contenido en ambos campos coincide");
                 } else {
-                    fetch("/cambioContrasenya?contrasenya=" + contrasenya1,{
-                      method: 'post'
-                    }).then(function(res){
-                      if(res.status==200) {
-                        alert("Cambio de contraseña exitoso");
-                        window.location.href = "/paginas/lobby.html";
-                      } else {
-                        alert("Error de base de datos");
-                        window.location.reload();
-                      }
+                    fetch("/cambioContrasenya?contrasenya=" + contrasenya1 + "&id=" + usuario.id, {
+                        method: 'put'
+                    }).then(function(res) {
+                        if (res.status == 200) {
+                            alert("Cambio de contraseña exitoso");
+                            window.location.href = "/paginas/lobby.html";
+                        } else {
+                            alert("Error de base de datos");
+                            window.location.reload();
+                        }
                     });
 
                     //console.log(contrasenya1 + " " + contrasenya2);
-                }
-            }
-        }
+                } //else
+            } //else
+        } //cambioContrasenya
 
     </script>
 
